@@ -86,6 +86,13 @@ class Jasper(object):
             raise
 
         try:
+            language = self.config['language']
+        except KeyError:
+            logger.warning("language not specified in profile, using 'en-US'")
+        else:
+            logger.info("Using language '%s'", language)
+
+        try:
             active_stt_slug = self.config['stt_engine']
         except KeyError:
             active_stt_slug = 'sphinx'
