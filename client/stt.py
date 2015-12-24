@@ -592,7 +592,9 @@ class WitAiSTT(AbstractSTTEngine):
                           headers=self.headers)
         try:
             r.raise_for_status()
-            text = json.loads(r.content)['_text'].decode('unicode_escape').encode('ascii', 'ignore')
+            text_content = json.loads(r.content)['_text']
+            text_content_unicode_escape = text_content.decode('unicode_escape')
+            text = text_content_unicode_escape.encode('ascii', 'ignore')
         except requests.exceptions.HTTPError:
             self._logger.critical('Request failed with response: %r',
                                   r.text,
